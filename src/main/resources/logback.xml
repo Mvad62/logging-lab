@@ -1,0 +1,36 @@
+<configuration>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} File Name:%X{fileName} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="INFO_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/logging-lab.log</file>  <!-- Текущий файл -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeBasedRollingPolicy">
+            <!-- Шаблон имен архивных файлов -->
+            <fileNamePattern>logs/info.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <!-- Максимальный размер файла перед роллингом -->
+            <maxFileSize>1MB</maxFileSize>
+            <!-- Хранение архивов за последние 30 дней -->
+            <maxHistory>30</maxHistory>
+            <!-- Общий максимальный размер всех логов -->
+            <totalSizeCap>1GB</totalSizeCap>
+        </rollingPolicy>
+
+        <!-- Фильтр только для INFO уровня -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <root level="DEBUG">
+        <appender-ref ref="STDOUT"/>
+    </root>
+</configuration>
